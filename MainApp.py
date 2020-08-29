@@ -38,13 +38,15 @@ class Main(QtWidgets.QMainWindow, design.Ui_Dialog):
             v5 = int(sheet["E2"].value + a4)
             v6 = int(sheet["E3"].value + a4)
 
-            sheet["G2"].value = v1
-            x1 = int(sheet["G2"].value)
 
-            sheet["G3"].value = v2
-            x2 = int(sheet["G3"].value)
+
+
+
 
             if a1 == b1:
+                self.warning("AVISO", "O código introduzido foi encontrado")
+                sheet["G2"].value = v1
+                x1 = int(sheet["G2"].value)
                 if x1 >= 15:
                     d = int(x1 - 15)
                     cc = int(sheet["F2"].value + 1)
@@ -54,42 +56,61 @@ class Main(QtWidgets.QMainWindow, design.Ui_Dialog):
                     sheet["G2"].value = d
                     sheet["F2"].value = cc
                     wb.save("try.xlsx")
+                    self.congrats("AVISO", "Os dados foram salvos")
+
                     if d == 15:
                         cc = int(sheet["F2"].value + 2)
                         sheet["G2"].value = 0
                         sheet["F2"].value = cc
                         wb.save("try.xlsx")
+                        self.congrats("AVISO", "Os dados foram salvos")
+
 
                 else:
                     sheet["B2"].value = v1
                     sheet["D2"].value = v3
                     sheet["E2"].value = v5
+                    sheet["G2"].value = v1
                     wb.save("try.xlsx")
+                    self.congrats("AVISO", "Os dados foram salvos")
+
 
 
             elif a1 == b2:
+                self.warning("AVISO", "O código introduzido foi encontrado")
+                sheet["G3"].value = v2
+                x2 = int(sheet["G3"].value)
                 if x2 >= 15:
-                    d = x2 - 15
-                    cc = sheet["F3"].value + 1
+                    d2 = int(x2 - 15)
+                    cc = int(sheet["F3"].value + 1)
                     sheet["B3"].value = v2
                     sheet["D3"].value = v4
                     sheet["E3"].value = v6
-                    sheet["G3"].value = d
+                    sheet["G3"].value = d2
                     sheet["F3"].value = cc
                     wb.save("try.xlsx")
-                    if d == 15:
-                        cc = sheet["F3"].value + 2
+                    self.congrats("AVISO", "Os dados foram salvos")
+                    if d2 == 15:
+                        cc = int(sheet["F3"].value + 2)
                         sheet["G3"].value = 0
                         sheet["F3"].value = cc
                         wb.save("try.xlsx")
+                        self.congrats("AVISO", "Os dados foram salvos")
+
 
                 else:
                     sheet["B3"].value = v2
                     sheet["D3"].value = v4
                     sheet["E3"].value = v6
+                    sheet["G3"].value = v2
+
                     wb.save("try.xlsx")
+                    self.congrats("AVISO", "Os dados foram salvos")
+            else:
+                self.warning("AVISO", "O código introduzido não foi encontrado")
         except Exception as h:
             self.msg_error(h)
+
 
     def msg_error(self, text):
         msg = QMessageBox()
@@ -98,9 +119,18 @@ class Main(QtWidgets.QMainWindow, design.Ui_Dialog):
         msg.setText(str(text))
         msg.exec_()
 
-
-
-
+    def warning(self, text, text2):
+        wrg = QMessageBox()
+        wrg.setWindowTitle(text)
+        wrg.setText(str(text2))
+        wrg.setStandardButtons(QMessageBox.Ok)
+        wrg.exec_()
+    def congrats(self, text, text2):
+        wrg = QMessageBox()
+        wrg.setWindowTitle(text)
+        wrg.setText(str(text2))
+        wrg.setStandardButtons(QMessageBox.Ok)
+        wrg.exec_()
 
 
 if __name__ == "__main__":
@@ -108,3 +138,4 @@ if __name__ == "__main__":
     app = Main()
     app.show()
     a.exec()
+
